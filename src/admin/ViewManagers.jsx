@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import '../admin/admin.css';
 
-export default function ViewCustomers() {
-  const [customers, setCustomers] = useState([]);
+export default function ViewManagers() {
+  const [managers, setManagers] = useState([]);
   const [deleteMessage, setDeleteMessage] = useState('');
 
   useEffect(() => {
-    const storedCustomers = JSON.parse(localStorage.getItem('customerRegistrations')) || [];
-    setCustomers(storedCustomers);
+    const storedManagers = JSON.parse(localStorage.getItem('managerRegistrations')) || [];
+    setManagers(storedManagers);
   }, []);
 
-  const handleDelete = (customerId) => {
-    if (window.confirm(`Are you sure you want to delete customer with ID ${customerId}? This action cannot be undone.`)) {
-      const updatedCustomers = customers.filter(customer => customer.id !== customerId);
-      setCustomers(updatedCustomers);
-      localStorage.setItem('customerRegistrations', JSON.stringify(updatedCustomers));
-      setDeleteMessage(`Customer with ID ${customerId} has been deleted successfully.`);
+  const handleDelete = (managerId) => {
+    if (window.confirm(`Are you sure you want to delete manager with ID ${managerId}? This action cannot be undone.`)) {
+      const updatedManagers = managers.filter(manager => manager.id !== managerId);
+      setManagers(updatedManagers);
+      localStorage.setItem('managerRegistrations', JSON.stringify(updatedManagers));
+      setDeleteMessage(`Manager with ID ${managerId} has been deleted successfully.`);
       setTimeout(() => setDeleteMessage(''), 3000);
     }
   };
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>Manage Customers</h2>
+      <h2>Manage Managers</h2>
       {deleteMessage && (
         <div style={{
           color: '#28a745',
@@ -36,8 +36,8 @@ export default function ViewCustomers() {
         </div>
       )}
 
-      {customers.length === 0 ? (
-        <p style={{ fontSize: '16px', color: '#666' }}>No customers registered yet.</p>
+      {managers.length === 0 ? (
+        <p style={{ fontSize: '16px', color: '#666' }}>No managers registered yet.</p>
       ) : (
         <div style={{ overflowX: 'auto' }}>
           <table style={{
@@ -50,10 +50,9 @@ export default function ViewCustomers() {
             <thead>
               <tr style={{ backgroundColor: '#f8f9fa', borderBottom: '2px solid #dee2e6' }}>
                 <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>ID</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Full Name</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Gender</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Manager Name</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Company Name</th>
                 <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Email</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Username</th>
                 <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Contact No</th>
                 <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Location</th>
                 <th style={{ padding: '12px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>Registered At</th>
@@ -61,22 +60,21 @@ export default function ViewCustomers() {
               </tr>
             </thead>
             <tbody>
-              {customers.map((customer, index) => (
+              {managers.map((manager, index) => (
                 <tr key={index} style={{ borderBottom: '1px solid #dee2e6', transition: 'background-color 0.2s' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
                 >
-                  <td style={{ padding: '12px' }}>{customer.id}</td>
-                  <td style={{ padding: '12px' }}>{customer.fullName}</td>
-                  <td style={{ padding: '12px' }}>{customer.gender}</td>
-                  <td style={{ padding: '12px' }}>{customer.email}</td>
-                  <td style={{ padding: '12px' }}>{customer.username}</td>
-                  <td style={{ padding: '12px' }}>{customer.contactNo}</td>
-                  <td style={{ padding: '12px' }}>{customer.location}</td>
-                  <td style={{ padding: '12px', fontSize: '12px', color: '#666' }}>{customer.registeredAt}</td>
+                  <td style={{ padding: '12px' }}>{manager.id}</td>
+                  <td style={{ padding: '12px' }}>{manager.managerName}</td>
+                  <td style={{ padding: '12px' }}>{manager.companyName}</td>
+                  <td style={{ padding: '12px' }}>{manager.email}</td>
+                  <td style={{ padding: '12px' }}>{manager.contactNo}</td>
+                  <td style={{ padding: '12px' }}>{manager.location}</td>
+                  <td style={{ padding: '12px', fontSize: '12px', color: '#666' }}>{manager.registeredAt}</td>
                   <td style={{ padding: '12px', textAlign: 'center' }}>
                     <button
-                      onClick={() => handleDelete(customer.id)}
+                      onClick={() => handleDelete(manager.id)}
                       style={{
                         padding: '6px 12px',
                         backgroundColor: '#dc3545',
